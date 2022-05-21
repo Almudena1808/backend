@@ -13,8 +13,8 @@ export class UsuarioEntity {
   apellidos: string;
   @Column({type:'varchar', length:150})
   contrasenia: string; 
-  @Column({type:'int'})
-  telefono: number;
+  @Column({type:'varchar' ,length:11})
+  telefono: string;
   @Column({type:'varchar', length:150})
   email: string;
   @Column({type:'varchar', length:150})

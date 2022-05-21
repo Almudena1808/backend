@@ -16,9 +16,8 @@ export class UsuarioDto {
     @NotBlack({message: 'El email no puede estar vacío'})
     contrasenia?: string;
 
-    @IsNumber()
-    @IsNotEmpty()
-    telefono?: number;
+    @NotBlack({message: 'El teléfono no puede estar vacío'})
+    telefono?: string;
 
     @NotBlack({message: 'El email no puede estar vacío'})
     email?: string;
