@@ -11,6 +11,9 @@ import {
   DB_USER,
 } from './config/constants';
 import { UsuarioModule } from './usuario/usuario.module';
+import { ArtistaModule } from './artista/artista.module';
+import { EmpresarioModule } from './empresario/empresario.module';
+import { EspectaculoModule } from './espectaculo/espectaculo.module';
 
 @Module({
   imports: [
@@ -35,6 +38,9 @@ import { UsuarioModule } from './usuario/usuario.module';
       inject: [ConfigService],
     }),
     UsuarioModule,
+    ArtistaModule,
+    EmpresarioModule,
+    EspectaculoModule,
   ],
   controllers: [AppController],
   providers: [AppService],

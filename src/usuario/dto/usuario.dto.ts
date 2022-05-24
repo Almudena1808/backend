@@ -1,8 +1,8 @@
-import { IsNotEmpty, IsNumber, IsString } from "class-validator";
 import { NotBlack } from "src/decorators/notblack.decorator";
 
 export class UsuarioDto {
 
+    id?: number;
     
     @NotBlack({message: 'El nombre del usuario no puede estar vacío'})
     user?: string;
