@@ -19,6 +19,6 @@ export class UsuarioEntity {
   email: string;
   @Column({type:'varchar', length:150})
   direccion: string;
-  @Column({type:'blob'})
+  @Column({type:'text'})
   foto: string;
 }
