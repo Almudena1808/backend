@@ -11,11 +11,21 @@ export class ContratoEntity{
   @Column({type:'tinyint'})
   aceptado: boolean;
 
-  @OneToOne(()=>EspectaculoEntity)
+  @Column({type: Date})
+  fechaEvento: Date;
+
+  @Column ({type: Date})
+  fechaFirma: Date;
+
+  @OneToOne(()=>EspectaculoEntity, espectaculo => espectaculo.id,{
+    cascade: true
+  })
   @JoinColumn()
   espectaculo: EspectaculoEntity;
 
-  @OneToOne(()=>EmpresarioEntity)
+  @OneToOne(()=>EmpresarioEntity, empresario => empresario.id,{
+    cascade: true
+  })
   @JoinColumn()
   empresario: EmpresarioEntity;
 }

@@ -10,7 +10,9 @@ export class EmpresarioEntity{
   @Column({type:'varchar', length:100})
   organizacion: string;
 
-  @OneToOne(()=>UsuarioEntity)
+  @OneToOne(()=>UsuarioEntity, usuario => usuario.id,{
+    cascade: true
+  })
   @JoinColumn()
   usuario: UsuarioEntity;
 }

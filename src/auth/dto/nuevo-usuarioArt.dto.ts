@@ -1,7 +1,7 @@
 import { IsEmail, IsPhoneNumber, IsString, MinLength } from "class-validator";
 import { NotBlack } from "src/decorators/notblack.decorator";
 
-export class UsuarioDto {
+export class NuevoUsuarioArtDto {
 
     id?: number;
 

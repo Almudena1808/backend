@@ -1,6 +1,9 @@
-import { BadGatewayException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadGatewayException, BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MessageDto } from 'src/common/message.dto';
+import { RolEntity } from 'src/rol/rol.entity';
+import { RolNombre } from 'src/rol/rol.enum';
+import { RolRepository } from 'src/rol/rol.repository';
 import { UsuarioDto } from './dto/usuario.dto';
 import { UsuarioEntity } from './usuario.entity';
 import { UsuarioRepository } from './usuario.repository';
@@ -10,8 +13,10 @@ export class UsuarioService {
 
     constructor(
         @InjectRepository(UsuarioEntity)
-        private usuarioRepository: UsuarioRepository
-    ) { }
+        private usuarioRepository: UsuarioRepository,
+        @InjectRepository(RolEntity)
+        private rolRepository: RolRepository
+    ) {}
     /**
      * 
      * @returns 
@@ -24,76 +29,25 @@ export class UsuarioService {
         }
         return list;
     }
-    /**
-     * 
-     * @param id 
-     * @returns 
-     */
-    async findById(id: number): Promise<UsuarioEntity> {
-        const usuario = await this.usuarioRepository.findOne(id);
-        if (!usuario) {
-            throw new NotFoundException(new MessageDto('no existe el usuario'));
-        }
-        return usuario;
-    }
-    /**
-     * 
-     * @param user 
-     * @returns 
-     */
-    async findByUsuario(user: string): Promise<UsuarioEntity> {
-        const usuario = await this.usuarioRepository.findOne({ user: user });
-        return usuario;
-    }
+
+
     /**
      * 
      * @param dto 
      * @returns 
      */
     async create(dto: UsuarioDto): Promise<any> {
-        const exists = await this.findByUsuario(dto.user);
-        if (exists) throw new BadGatewayException(new MessageDto('Ese usuario ya existe'));
-        const usuario = this.usuarioRepository.create(dto);
-        await this.usuarioRepository.save(usuario);
-        // return{message: 'usuario creado'};
-        return new MessageDto('usuario creado');
-    }
-    /**
-     * 
-     * @param id 
-     * @param dto 
-     * @returns 
-     */
-    async update(id: number, dto: UsuarioDto): Promise<any> {
-        const usuario = await this.findById(id);
-        if (!usuario)
-            throw new BadGatewayException(new MessageDto('Ese usuario no existe'));
-        const exists = await this.findByUsuario(dto.user);
-        if (exists && exists.id !== id) throw new BadGatewayException(new MessageDto('Ese usuario ya existe'));
+        const {user, email} = dto;
+        const exists = await this.usuarioRepository.findOne({where: [{user: user}, {email: email}]});
+        if (exists) throw new BadRequestException(new MessageDto('Ese usuario ya existe'));
+        const rolEmp = await this.rolRepository.findOne({where: {rolNombre: RolNombre.EMPRESARIO}});
+        const rolArt = await this.rolRepository.findOne({where: {rolNombre: RolNombre.ARTISTA}});
 
-        dto.nombre ? usuario.nombre = dto.nombre : usuario.nombre = usuario.nombre;
-        dto.apellidos ? usuario.apellidos = dto.apellidos : usuario.apellidos = usuario.apellidos;
-        dto.contrasenia ? usuario.contrasenia = dto.contrasenia : usuario.contrasenia = usuario.contrasenia;
-        dto.telefono ? usuario.telefono = dto.telefono : usuario.telefono = usuario.telefono;
-        dto.email ? usuario.email = dto.email : usuario.email = usuario.email;
-        dto.direccion ? usuario.direccion = dto.direccion : usuario.direccion = usuario.direccion;
-        dto.foto ? usuario.foto = dto.foto : usuario.foto = usuario.foto;
-
-        await this.usuarioRepository.save(usuario);
-        //  return { message: 'usuario actualizado' };
-        return new MessageDto('usuario actualizado');
-
-    }
-    /**
-     * 
-     * @param id 
-     * @returns 
-     */
-    async delete(id: number): Promise<any> {
-        const usuario = await this.findById(id);
-        await this.usuarioRepository.delete(usuario);
-        //  return { message: `usuario eliminado ${usuario.user}` };
-        return new MessageDto('usuario eliminado');
+        if(!rolArt ||!rolEmp) throw new InternalServerErrorException(new MessageDto('Los roles no han sido creados'));
+        const emp = this.usuarioRepository.create(dto);
+        emp.roles = [rolEmp];
+        await this.usuarioRepository.save(emp);
+        return new MessageDto('Empresario creado')
 
     }
 }

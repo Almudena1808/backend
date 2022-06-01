@@ -12,26 +12,12 @@ export class UsuarioController {
         return await this.usuarioService.getAll();
     }
 
-    @Get(':id')
-    async getOne(@Param('id', ParseIntPipe) id: number) {
-        return await this.usuarioService.findById(id);
-    }
-
+  
     @UsePipes(new ValidationPipe({whitelist: true}))
     @Post()
     async create(@Body() dto:UsuarioDto){
         return await this.usuarioService.create(dto);
     }
 
-    @UsePipes(new ValidationPipe({whitelist: true}))
-    @Put(':id')
-    async update(@Param('id', ParseIntPipe) id:number, @Body() dto:UsuarioDto){
-        return await this.usuarioService.update(id, dto);
-    }
-
-    @Delete(':id')
-    async delete(@Param('id', ParseIntPipe) id: number){
-        return await this.usuarioService.delete(id);
-    }
 
 }

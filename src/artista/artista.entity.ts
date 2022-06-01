@@ -14,7 +14,9 @@ export class ArtistaEntity{
   @Column({type:'varchar', length:50})
   especializacion: string;
 
-  @OneToOne(()=>UsuarioEntity)
+  @OneToOne(()=>UsuarioEntity, usuario => usuario.id,{
+    cascade: true
+  })
   @JoinColumn()
   usuario: UsuarioEntity;
 }

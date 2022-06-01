@@ -14,6 +14,9 @@ import { UsuarioModule } from './usuario/usuario.module';
 import { ArtistaModule } from './artista/artista.module';
 import { EmpresarioModule } from './empresario/empresario.module';
 import { EspectaculoModule } from './espectaculo/espectaculo.module';
+import { ContratoModule } from './contrato/contrato.module';
+import { RolModule } from './rol/rol.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -41,6 +44,9 @@ import { EspectaculoModule } from './espectaculo/espectaculo.module';
     ArtistaModule,
     EmpresarioModule,
     EspectaculoModule,
+    ContratoModule,
+    RolModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

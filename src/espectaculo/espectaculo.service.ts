@@ -21,7 +21,7 @@ export class EspectaculoService {
         const list = await this.empresarioRepository.find();
         //compruebo que la lista no esté vacía
         if (!list.length) {
-            throw new NotFoundException(new MessageDto('No hay ningún usuario'))
+            throw new NotFoundException(new MessageDto('No hay ningún espectáculo'))
         }
         return list;
     }
@@ -33,7 +33,7 @@ export class EspectaculoService {
     async findById(id: number): Promise<EspectaculoEntity> {
         const artista = await this.empresarioRepository.findOne(id);
         if (!artista) {
-            throw new NotFoundException(new MessageDto('no existe artista'));
+            throw new NotFoundException(new MessageDto('no existe el espectáculo'));
         }
         return artista;
     }
@@ -53,11 +53,11 @@ export class EspectaculoService {
      */
     async create(dto: EspectaculoDto): Promise<any> {
         const exists = await this.findByArtista(dto.artista);
-        if (exists) throw new BadGatewayException(new MessageDto('Ese usuario ya existe'));
+        if (exists) throw new BadGatewayException(new MessageDto('Ese espectáculo ya existe'));
         const artista = this.empresarioRepository.create(dto);
         await this.empresarioRepository.save(artista);
         // return{message: 'usuario creado'};
-        return new MessageDto('artista creado');
+        return new MessageDto('espectáculo creado');
     }
     /**
      * 
@@ -68,7 +68,7 @@ export class EspectaculoService {
     async update(id: number, dto: EspectaculoDto): Promise<any> {
         const espectaculo = await this.findById(id);
         if (!espectaculo)
-            throw new BadGatewayException(new MessageDto('Ese espectaculo no existe'));
+            throw new BadGatewayException(new MessageDto('Ese espectáculo no existe'));
         const exists = await this.findById(dto.id);
         if (exists && exists.id !== id) throw new BadGatewayException(new MessageDto('Ese usuario ya existe'));
         
