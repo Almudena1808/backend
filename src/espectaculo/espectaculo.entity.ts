@@ -1,19 +1,19 @@
 import { ArtistaEntity } from "src/artista/artista.entity";
+import { UsuarioEntity } from "src/usuario/usuario.entity";
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({name: 'espectaculo'})
 export class EspectaculoEntity{
     @PrimaryGeneratedColumn()
     id: number;
-    @Column({type:'varchar', length:50})
+    @Column({type:'varchar', length:50, unique: true})
     nombre: string;
     @Column({type:'text'})
     descripcion: string;
-    @Column({type:'double'})
-    precio: number;
+    @Column({type:'varchar', length:8})
+    precio: string;
 
-
-    @OneToOne(()=>ArtistaEntity)
+    @OneToOne(type=> UsuarioEntity)
     @JoinColumn()
-    artista: ArtistaEntity;
+    artista: UsuarioEntity;
 } 

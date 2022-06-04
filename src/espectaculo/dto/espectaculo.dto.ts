@@ -1,5 +1,5 @@
-import { ArtistaEntity } from "src/artista/artista.entity";
 import { NotBlack } from "src/decorators/notblack.decorator";
+import { UsuarioEntity } from "src/usuario/usuario.entity";
 
 export class EspectaculoDto{
 
@@ -11,9 +11,9 @@ export class EspectaculoDto{
     @NotBlack({message: 'Su descripción no puede estar vacía'})
     descripcion?: string;
 
-    @NotBlack({message: 'Escriba el precio del espectáculo'})
-    precio?: number;
+    @NotBlack({message: 'Escriba el precio del espectáculo cantidad máxima de 99999,99€'})
+    precio?: string;
 
-    artista?: ArtistaEntity;
+    artista?: UsuarioEntity;
 
 }

@@ -21,8 +21,18 @@ export class UsuarioEntity {
   email: string;
   @Column({type:'varchar', length:150})
   direccion: string;
-  @Column({type:'text', nullable:false})
+  @Column({type:'longtext', nullable:false})
   foto: string;
+
+  @Column({type:'varchar', length:10, nullable:false})
+  fechNac: string;
+
+  @Column({type:'varchar', length:50 , nullable:true})
+  especializacion?: string;
+  @Column({type:'text', nullable:true})
+  descripcion?: string; 
+  @Column({type:'varchar', length:50 , nullable:true})
+  organizacion?: string;
 
   @ManyToMany(type=> RolEntity, rol =>rol.usuarios,{eager:true})
   @JoinTable({

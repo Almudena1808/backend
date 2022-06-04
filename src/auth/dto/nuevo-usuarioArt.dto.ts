@@ -3,7 +3,6 @@ import { NotBlack } from "src/decorators/notblack.decorator";
 
 export class NuevoUsuarioArtDto {
 
-    id?: number;
 
     @IsString()
     @MinLength(4, {message:'El nombre de usuario tiene que tener al menos 4 carácteres'})

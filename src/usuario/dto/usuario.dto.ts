@@ -29,8 +29,23 @@ export class UsuarioDto {
 
   
     @NotBlack({message: 'La dirección no puede estar vacío'})
+    @IsString()
     direccion?: string;
 
     @NotBlack({message: 'La foto no puede estar vacía'})
     foto?: string;
+
+    @NotBlack({message: 'La foto no puede estar vacía'})
+    fechNac?: string;
+
+    //estos 3 atributos pueden estar vacios debido a que dependiendo del rol del perfil se lo pedirán unos datos u otros
+
+    @IsString()    
+    especializacion?: string; // atributo para artista
+    @IsString()    
+    descripcion?: string; // atributo para artista
+    @IsString()    
+    organizacion?: string;// atributo para empresario
+
+
 }

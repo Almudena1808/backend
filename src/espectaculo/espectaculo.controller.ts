@@ -1,6 +1,4 @@
 import { Body, Controller, Delete, ForbiddenException, Get, Param, ParseIntPipe, Post, Put, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import { GetPrincipal } from 'src/decorators/get-principal.decorator';
 import { RolDecorator } from 'src/decorators/rol.decorator';
 import { JwtAuthGuard } from 'src/guards/jwt.guard';
 import { RolesGuard } from 'src/guards/rol.guard';
