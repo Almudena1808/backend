@@ -1,4 +1,3 @@
-import { EmpresarioEntity } from "src/empresario/empresario.entity";
 import { EspectaculoEntity } from "src/espectaculo/espectaculo.entity";
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
@@ -22,10 +21,11 @@ export class ContratoEntity{
   })
   @JoinColumn()
   espectaculo: EspectaculoEntity;
-
+/*
   @OneToOne(()=>EmpresarioEntity, empresario => empresario.id,{
     cascade: true
   })
   @JoinColumn()
   empresario: EmpresarioEntity;
+  */
 }

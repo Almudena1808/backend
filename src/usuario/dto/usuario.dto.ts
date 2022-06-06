@@ -35,7 +35,7 @@ export class UsuarioDto {
     @NotBlack({message: 'La foto no puede estar vacía'})
     foto?: string;
 
-    @NotBlack({message: 'La foto no puede estar vacía'})
+    @NotBlack({message: 'La fecha de nacimiento no puede estar vacía'})
     fechNac?: string;
 
     //estos 3 atributos pueden estar vacios debido a que dependiendo del rol del perfil se lo pedirán unos datos u otros

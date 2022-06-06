@@ -1,6 +1,6 @@
-import { ArtistaEntity } from "src/artista/artista.entity";
+import { ImagenEntity } from "src/imagen/imagen.entity";
 import { UsuarioEntity } from "src/usuario/usuario.entity";
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({name: 'espectaculo'})
 export class EspectaculoEntity{
@@ -13,7 +13,10 @@ export class EspectaculoEntity{
     @Column({type:'varchar', length:8})
     precio: string;
 
-    @OneToOne(type=> UsuarioEntity)
-    @JoinColumn()
-    artista: UsuarioEntity;
+    @ManyToOne(type=> UsuarioEntity, (usuario)=>usuario.espectaculos)
+    @JoinColumn({name: 'usuarioId'})
+    usuario: UsuarioEntity;
+
+    @OneToMany(type=>ImagenEntity, (imagen)=>imagen.espectaculo)
+    imagenes: ImagenEntity[];
 } 

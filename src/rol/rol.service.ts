@@ -15,7 +15,7 @@ export class RolService {
 
    async getAll():Promise<RolEntity[]>{
        const roles = await this.rolRepository.find();
-       if(!roles.length) throw new NotFoundException(new MessageDto('no hya roles en la lista'));
+       if(!roles.length) throw new NotFoundException(new MessageDto('no hay roles en la lista'));
        return roles;
    }
 

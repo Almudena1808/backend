@@ -1,32 +1,29 @@
-import { Body, Controller, Request, Delete, ForbiddenException, Get, Param, ParseIntPipe, Post, Put, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { RolDecorator } from 'src/decorators/rol.decorator';
 import { JwtAuthGuard } from 'src/guards/jwt.guard';
 import { RolesGuard } from 'src/guards/rol.guard';
 import { RolNombre } from 'src/rol/rol.enum';
-import { EspectaculoDto } from './dto/espectaculo.dto';
-import { EspectaculoService } from './espectaculo.service';
+import { ImagenDto } from './dto/imagen.dto';
+import { ImagenService } from './imagen.service';
 
+@Controller('imagen')
+export class ImagenController {
 
-
-@Controller('espectaculo')
-export class EspectaculoController {
-
-    constructor(private readonly espectaculoService: EspectaculoService) {}
+    constructor(private readonly imagenService: ImagenService) {}
 
     @RolDecorator(RolNombre.EMPRESARIO, RolNombre.ARTISTA)
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Get()
     async getAll( ) {
-        return await this.espectaculoService.getAll();
+        return await this.imagenService.getAll();
     }
 
     @RolDecorator(RolNombre.EMPRESARIO, RolNombre.ARTISTA)
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Get(':id')
     async getOne(@Param('id', ParseIntPipe) id: number) {
-        return await this.espectaculoService.findById(id);
+        return await this.imagenService.findById(id);
     }
-
 
     @RolDecorator(RolNombre.ARTISTA) // solo puede crear espectáculos el artista
     @UseGuards(JwtAuthGuard, RolesGuard)
@@ -34,7 +31,7 @@ export class EspectaculoController {
     @Post()
     async create(@Body() dto:any){
         
-        return await this.espectaculoService.create(dto);
+        return await this.imagenService.create(dto);
     }
 
 
@@ -42,15 +39,15 @@ export class EspectaculoController {
     @UseGuards(JwtAuthGuard, RolesGuard)
     @UsePipes(new ValidationPipe({whitelist: true}))
     @Put(':id')
-    async update(@Param('id', ParseIntPipe) id:number, @Body() dto:EspectaculoDto){
-        return await this.espectaculoService.update(id, dto);
+    async update(@Param('id', ParseIntPipe) id:number, @Body() dto:ImagenDto){
+        return await this.imagenService.update(id, dto);
     }
 
     @RolDecorator(RolNombre.ARTISTA) // solo puede borrarlo el artista
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Delete(':id')
     async delete(@Param('id', ParseIntPipe) id: number){
-        return await this.espectaculoService.delete(id);
+        return await this.imagenService.delete(id);
     }
 
 }

@@ -19,5 +19,10 @@ export class UsuarioController {
         return await this.usuarioService.create(dto);
     }
 
+    @Get(':id')
+    async getOne(@Param('id', ParseIntPipe) id: number) {
+        return await this.usuarioService.findById(id);
+    }
+
 
 }

@@ -1,7 +1,6 @@
 import { BadGatewayException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MessageDto } from 'src/common/message.dto';
-import { EmpresarioEntity } from 'src/empresario/empresario.entity';
 import { EspectaculoEntity } from 'src/espectaculo/espectaculo.entity';
 import { ContratoEntity } from './contrato.entity';
 import { ContratoRepository } from './contrato.repository';
@@ -39,7 +38,7 @@ export class ContratoService {
         }
         return artista;
     }
-
+/*
     async findContratoByEmpresario(emp: EmpresarioEntity): Promise<ContratoEntity> {
         const usuario = await this.contratoRepository.findOne({empresario: emp});
         if (!usuario) {
@@ -47,6 +46,7 @@ export class ContratoService {
         }
         return usuario;
     }
+    */
     /**
      * 
      * @param emp 
@@ -54,6 +54,8 @@ export class ContratoService {
      * @param fe 
      * @returns 
      */
+
+    /*
     async findContratoByEmpEspFechEsp(emp: EmpresarioEntity, esp: EspectaculoEntity, fe :Date): Promise<ContratoEntity> {
         const contrato = await this.contratoRepository.findOne({empresario: emp, espectaculo: esp, fechaEvento: fe});
         if (!contrato) {
@@ -61,12 +63,13 @@ export class ContratoService {
         }
         return contrato;
     }
-    
+    */
     /**
      * 
      * @param dto 
      * @returns 
      */
+    /*
     async create(dto: ContratoDto): Promise<any> {
         const exists = await this.findContratoByEmpEspFechEsp(dto.empresario, dto.espectaculo, dto.fechaEvento);
         if (exists) throw new BadGatewayException(new MessageDto('Ese contrato ya existe'));
@@ -75,6 +78,7 @@ export class ContratoService {
         // return{message: 'usuario creado'};
         return new MessageDto('contrato creado');
     }
+    */
     /**
      * 
      * @param id 

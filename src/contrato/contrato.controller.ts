@@ -18,12 +18,13 @@ export class ContratoController {
         return await this.contratoService.findById(id);
     }
 
+    /*
     @UsePipes(new ValidationPipe({whitelist: true}))
     @Post()
     async create(@Body() dto:ContratoDto){
         return await this.contratoService.create(dto);
     }
-
+*/
     @UsePipes(new ValidationPipe({whitelist: true}))
     @Put(':id')
     async update(@Param('id', ParseIntPipe) id:number, @Body() dto:ContratoDto){

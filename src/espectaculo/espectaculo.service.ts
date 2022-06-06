@@ -45,13 +45,23 @@ export class EspectaculoService {
      * @param dto 
      * @returns 
      */
-    async create(dto: EspectaculoDto): Promise<any> {
+    async create(dto: any): Promise<any> {
 
+        console.log(dto.usuario);
+        const usuario = await this.usuarioRepository.findOne(dto.usuario);
+        if(!usuario) throw new BadGatewayException(new MessageDto('No existe ese usuario'));
         //compruebo que no exista un espectáculo que se llame igual
         const { nombre} = dto;
         const exists = await this.espectaculoRepository.findOne({where: [{ nombre: nombre }]});
         if (exists) throw new BadGatewayException(new MessageDto('Ese espectáculo ya existe'));
-        const espectaculo = this.espectaculoRepository.create(dto);
+        //sino
+        const espectaculo = new EspectaculoEntity();
+        espectaculo.usuario= usuario;
+        espectaculo.nombre = dto.nombre;
+        espectaculo.descripcion = dto.descripcion;
+        espectaculo.precio = dto.precio;
+
+      //  const tt = this.espectaculoRepository.create(dto);
         await this.espectaculoRepository.save(espectaculo);
         // return{message: 'usuario creado'};
         return new MessageDto('espectáculo creado');

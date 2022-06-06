@@ -11,12 +11,11 @@ import {
   DB_USER,
 } from './config/constants';
 import { UsuarioModule } from './usuario/usuario.module';
-import { ArtistaModule } from './artista/artista.module';
-import { EmpresarioModule } from './empresario/empresario.module';
 import { EspectaculoModule } from './espectaculo/espectaculo.module';
 import { ContratoModule } from './contrato/contrato.module';
 import { RolModule } from './rol/rol.module';
 import { AuthModule } from './auth/auth.module';
+import { ImagenModule } from './imagen/imagen.module';
 
 @Module({
   imports: [
@@ -41,12 +40,11 @@ import { AuthModule } from './auth/auth.module';
       inject: [ConfigService],
     }),
     UsuarioModule,
-    ArtistaModule,
-    EmpresarioModule,
     EspectaculoModule,
-    ContratoModule,
+ //   ContratoModule,
     RolModule,
-    AuthModule
+    AuthModule,
+    ImagenModule
   ],
   controllers: [AppController],
   providers: [AppService],

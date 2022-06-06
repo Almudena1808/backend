@@ -1,10 +1,12 @@
 import { hash } from "bcryptjs";
+import { type } from "os";
+import { EspectaculoEntity } from "src/espectaculo/espectaculo.entity";
 import { RolEntity } from "src/rol/rol.entity";
-import { BeforeInsert, BeforeUpdate, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: 'usuario' })
 export class UsuarioEntity {
-  @PrimaryGeneratedColumn('increment')
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column({type:'varchar', length:30, nullable:false, unique: true})
@@ -41,6 +43,11 @@ export class UsuarioEntity {
       inverseJoinColumn:{name:'rol_id'}
 })
   roles:RolEntity[];
+
+
+  @OneToMany(type=>EspectaculoEntity, (espectaculo)=>espectaculo.usuario)
+  espectaculos: EspectaculoEntity[];
+
 
   @BeforeInsert()
   @BeforeUpdate()
