@@ -15,7 +15,6 @@ import { EspectaculoModule } from './espectaculo/espectaculo.module';
 import { ContratoModule } from './contrato/contrato.module';
 import { RolModule } from './rol/rol.module';
 import { AuthModule } from './auth/auth.module';
-import { ImagenModule } from './imagen/imagen.module';
 
 @Module({
   imports: [
@@ -44,7 +43,6 @@ import { ImagenModule } from './imagen/imagen.module';
  //   ContratoModule,
     RolModule,
     AuthModule,
-    ImagenModule
   ],
   controllers: [AppController],
   providers: [AppService],

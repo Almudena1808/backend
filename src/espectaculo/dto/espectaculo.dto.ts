@@ -14,6 +14,9 @@ export class EspectaculoDto{
     @NotBlack({message: 'Escriba el precio del espectáculo cantidad máxima de 99999,99€'})
     precio?: string;
 
+    @NotBlack({message: 'La foto no puede estar vacía'})
+    imagen?: string;
+
     usuario?: UsuarioEntity;
 
 }

@@ -13,23 +13,23 @@ export class EspectaculoController {
 
     constructor(private readonly espectaculoService: EspectaculoService) {}
 
-    @RolDecorator(RolNombre.EMPRESARIO, RolNombre.ARTISTA)
-    @UseGuards(JwtAuthGuard, RolesGuard)
+  //  @RolDecorator(RolNombre.EMPRESARIO, RolNombre.ARTISTA)
+   // @UseGuards(JwtAuthGuard, RolesGuard)
     @Get()
     async getAll( ) {
         return await this.espectaculoService.getAll();
     }
 
-    @RolDecorator(RolNombre.EMPRESARIO, RolNombre.ARTISTA)
-    @UseGuards(JwtAuthGuard, RolesGuard)
+   // @RolDecorator(RolNombre.EMPRESARIO, RolNombre.ARTISTA)
+  //  @UseGuards(JwtAuthGuard, RolesGuard)
     @Get(':id')
     async getOne(@Param('id', ParseIntPipe) id: number) {
         return await this.espectaculoService.findById(id);
     }
 
 
-    @RolDecorator(RolNombre.ARTISTA) // solo puede crear espectáculos el artista
-    @UseGuards(JwtAuthGuard, RolesGuard)
+  //  @RolDecorator(RolNombre.ARTISTA) // solo puede crear espectáculos el artista
+  //  @UseGuards(JwtAuthGuard, RolesGuard)
     @UsePipes(new ValidationPipe({whitelist: true}))
     @Post()
     async create(@Body() dto:any){
@@ -38,16 +38,16 @@ export class EspectaculoController {
     }
 
 
-    @RolDecorator(RolNombre.ARTISTA) // solo puede editarlo el artista
-    @UseGuards(JwtAuthGuard, RolesGuard)
+  //  @RolDecorator(RolNombre.ARTISTA) // solo puede editarlo el artista
+  //  @UseGuards(JwtAuthGuard, RolesGuard)
     @UsePipes(new ValidationPipe({whitelist: true}))
     @Put(':id')
     async update(@Param('id', ParseIntPipe) id:number, @Body() dto:EspectaculoDto){
         return await this.espectaculoService.update(id, dto);
     }
 
-    @RolDecorator(RolNombre.ARTISTA) // solo puede borrarlo el artista
-    @UseGuards(JwtAuthGuard, RolesGuard)
+  //  @RolDecorator(RolNombre.ARTISTA) // solo puede borrarlo el artista
+    //@UseGuards(JwtAuthGuard, RolesGuard)
     @Delete(':id')
     async delete(@Param('id', ParseIntPipe) id: number){
         return await this.espectaculoService.delete(id);

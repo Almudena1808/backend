@@ -47,7 +47,7 @@ export class EspectaculoService {
      */
     async create(dto: any): Promise<any> {
 
-        console.log(dto.usuario);
+      //  console.log(dto.usuario);
         const usuario = await this.usuarioRepository.findOne(dto.usuario);
         if(!usuario) throw new BadGatewayException(new MessageDto('No existe ese usuario'));
         //compruebo que no exista un espectáculo que se llame igual
@@ -59,6 +59,8 @@ export class EspectaculoService {
         espectaculo.usuario= usuario;
         espectaculo.nombre = dto.nombre;
         espectaculo.descripcion = dto.descripcion;
+        espectaculo.imagen = dto.imagen;
+
         espectaculo.precio = dto.precio;
 
       //  const tt = this.espectaculoRepository.create(dto);
@@ -82,7 +84,8 @@ export class EspectaculoService {
         dto.nombre ? espectaculo.nombre = dto.nombre : espectaculo.nombre = espectaculo.nombre
         dto.descripcion ? espectaculo.descripcion = dto.descripcion : espectaculo.descripcion = espectaculo.descripcion;
         dto.precio ? espectaculo.precio = dto.precio : espectaculo.precio = espectaculo.precio;
-     
+        dto.imagen ? espectaculo.imagen = dto.imagen : espectaculo.imagen = espectaculo.imagen;
+
         await this.espectaculoRepository.save(espectaculo);
         //  return { message: 'usuario actualizado' };
         return new MessageDto('Espectáculo actualizado');

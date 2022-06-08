@@ -11,7 +11,6 @@ import { NuevoUsuarioArtDto } from './dto/nuevo-usuarioArt.dto';
 import { compare } from 'bcryptjs';
 import { PayloadInterface } from './payload.interface';
 import { JwtService } from '@nestjs/jwt';
-import { TokenDto } from './dto/token.dto';
 
 @Injectable()
 export class AuthService {
@@ -79,18 +78,4 @@ export class AuthService {
   }
 
 
-  async refresh(dto: TokenDto): Promise<any> {
-
-    const usuario = await this.jwtService.decode(dto.token);
-    const payload: PayloadInterface = {
-      id: usuario[`id`],
-      user:  usuario[`user`],
-      email:  usuario[`email`],
-      contrasenia:  usuario[`contrasenia`],
-      roles: usuario[`roles`]
-    }
-
-    const token = await this.jwtService.sign(payload);
-    return { token };
-  }
 }

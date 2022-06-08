@@ -73,9 +73,7 @@ export class UsuarioService {
         const usuario = await this.findById(id);
         if (!usuario)
             throw new BadGatewayException(new MessageDto('Ese usuario no existe'));
-        const exists = await this.findById(dto.id);
-        if (exists && exists.id !== id) throw new BadGatewayException(new MessageDto('Ese usuario ya existe'));
-        
+      
         dto.nombre ? usuario.nombre = dto.nombre : usuario.nombre = usuario.nombre;
         dto.apellidos ? usuario.apellidos = dto.apellidos : usuario.apellidos = usuario.apellidos;
         dto.email ? usuario.email = dto.email : usuario.email = usuario.email;

@@ -25,4 +25,10 @@ export class UsuarioController {
     }
 
 
+    @UsePipes(new ValidationPipe({whitelist: true}))
+    @Put(':id')
+    async update(@Param('id', ParseIntPipe) id:number, @Body() dto:UsuarioDto){
+        return await this.usuarioService.update(id, dto);
+    }
+
 }
