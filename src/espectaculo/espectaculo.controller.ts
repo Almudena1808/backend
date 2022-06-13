@@ -28,6 +28,11 @@ export class EspectaculoController {
     }
 
 
+    @Get('busca/:id')
+    async getList(@Param('id', ParseIntPipe) id: number) {
+        return await this.espectaculoService.findListByUser(id);
+    }
+
   //  @RolDecorator(RolNombre.ARTISTA) // solo puede crear espectáculos el artista
   //  @UseGuards(JwtAuthGuard, RolesGuard)
     @UsePipes(new ValidationPipe({whitelist: true}))

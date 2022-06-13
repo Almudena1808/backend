@@ -1,5 +1,6 @@
 import { BadGatewayException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { listenerCount } from 'process';
 import { MessageDto } from 'src/common/message.dto';
 import { UsuarioEntity } from 'src/usuario/usuario.entity';
 import { UsuarioRepository } from 'src/usuario/usuario.repository';
@@ -28,17 +29,27 @@ export class EspectaculoService {
         }
         return list;
     }
+
+
+    async findListByUser(artId: number):Promise<EspectaculoEntity[]>{
+
+
+        const list = await this.espectaculoRepository.find({where: [{usuario: artId}]});
+        if (!list) throw new BadGatewayException(new MessageDto('Aún no tiene espectáculos disponibles'));
+        return list;
+    }
+
     /**
      * 
      * @param id 
      * @returns 
      */
     async findById(id: number): Promise<EspectaculoEntity> {
-        const artista = await this.espectaculoRepository.findOne(id);
-        if (!artista) {
+        const espectaculo = await this.espectaculoRepository.findOne(id);
+        if (!espectaculo) {
             throw new NotFoundException(new MessageDto('no existe el espectáculo'));
         }
-        return artista;
+        return espectaculo;
     }
     /**
      * 
@@ -79,7 +90,7 @@ export class EspectaculoService {
         if (!espectaculo)
             throw new BadGatewayException(new MessageDto('Ese espectáculo no existe'));
         const exists = await this.findById(dto.id);
-        if (exists && exists.id !== id) throw new BadGatewayException(new MessageDto('Ese usuario ya existe'));
+      //  if (exists && exists.id !== id) throw new BadGatewayException(new MessageDto('Ese usuario ya existe'));
         
         dto.nombre ? espectaculo.nombre = dto.nombre : espectaculo.nombre = espectaculo.nombre
         dto.descripcion ? espectaculo.descripcion = dto.descripcion : espectaculo.descripcion = espectaculo.descripcion;
