@@ -1,5 +1,6 @@
 import { hash } from "bcryptjs";
 import { type } from "os";
+import { ContratoEntity } from "src/contrato/contrato.entity";
 import { EspectaculoEntity } from "src/espectaculo/espectaculo.entity";
 import { RolEntity } from "src/rol/rol.entity";
 import { BeforeInsert, BeforeUpdate, Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
@@ -47,6 +48,10 @@ export class UsuarioEntity {
 
   @OneToMany(type=>EspectaculoEntity, (espectaculo)=>espectaculo.usuario)
   espectaculos: EspectaculoEntity[];
+
+
+  @OneToMany(() => ContratoEntity, (contrato) => contrato.empresario)
+  contratos: ContratoEntity[];
 
 
   @BeforeInsert()

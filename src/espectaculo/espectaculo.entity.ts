@@ -1,3 +1,4 @@
+import { ContratoEntity } from "src/contrato/contrato.entity";
 import { UsuarioEntity } from "src/usuario/usuario.entity";
 import { Column, Entity, JoinColumn, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
@@ -18,6 +19,9 @@ export class EspectaculoEntity {
     @ManyToOne(type => UsuarioEntity, (usuario) => usuario.espectaculos)
     @JoinColumn({ name: 'usuarioId' })
     usuario: UsuarioEntity;
+
+    @OneToMany(() => ContratoEntity, (contrato) => contrato.espectaculo)
+    contratos: ContratoEntity[];
 
 
 } 

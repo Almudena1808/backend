@@ -1,5 +1,6 @@
 import { EspectaculoEntity } from "src/espectaculo/espectaculo.entity";
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { UsuarioEntity } from "src/usuario/usuario.entity";
+import { Column, Entity, JoinColumn, ManyToOne,  PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: 'contrato' })
 export class ContratoEntity{
@@ -10,22 +11,23 @@ export class ContratoEntity{
   @Column({type:'tinyint'})
   aceptado: boolean;
 
-  @Column({type: Date})
-  fechaEvento: Date;
+  @Column({type: "varchar"})
+  fechaEvento: string  ;
+  @Column ({type: "varchar"})
+  fechaSolicitud: string;
 
-  @Column ({type: Date})
-  fechaFirma: Date;
+  @Column ({type: "varchar"})
+  fechaFirma: string;
 
-  @OneToOne(()=>EspectaculoEntity, espectaculo => espectaculo.id,{
-    cascade: true
-  })
-  @JoinColumn()
+
+
+  @ManyToOne(() => EspectaculoEntity, (espectaculo) => espectaculo.contratos)
+  @JoinColumn({name: 'espectaculoId'})
   espectaculo: EspectaculoEntity;
-/*
-  @OneToOne(()=>EmpresarioEntity, empresario => empresario.id,{
-    cascade: true
-  })
-  @JoinColumn()
-  empresario: EmpresarioEntity;
-  */
+  
+
+
+  @ManyToOne(() => UsuarioEntity, (usuario) => usuario.contratos)
+  @JoinColumn({name: 'empresarioId'})
+  empresario: UsuarioEntity;
 }

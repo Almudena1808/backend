@@ -2,6 +2,9 @@ import { BadGatewayException, Injectable, NotFoundException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { MessageDto } from 'src/common/message.dto';
 import { EspectaculoEntity } from 'src/espectaculo/espectaculo.entity';
+import { EspectaculoRepository } from 'src/espectaculo/espectaculo.repository';
+import { UsuarioEntity } from 'src/usuario/usuario.entity';
+import { UsuarioRepository } from 'src/usuario/usuario.repository';
 import { ContratoEntity } from './contrato.entity';
 import { ContratoRepository } from './contrato.repository';
 import { ContratoDto } from './dto/contrato.dto';
@@ -12,7 +15,11 @@ export class ContratoService {
 
     constructor(
         @InjectRepository(ContratoEntity)
-        private contratoRepository: ContratoRepository
+        private contratoRepository: ContratoRepository,
+        @InjectRepository(UsuarioEntity)
+        private usuarioRepository: UsuarioRepository,
+        @InjectRepository(EspectaculoEntity)
+        private espectaculoRepository: EspectaculoRepository
     ) { }
     /**
      * 
@@ -38,47 +45,29 @@ export class ContratoService {
         }
         return artista;
     }
-/*
-    async findContratoByEmpresario(emp: EmpresarioEntity): Promise<ContratoEntity> {
-        const usuario = await this.contratoRepository.findOne({empresario: emp});
-        if (!usuario) {
-            throw new NotFoundException(new MessageDto('no existe el contrato del empresario'));
-        }
-        return usuario;
-    }
-    */
-    /**
-     * 
-     * @param emp 
-     * @param esp 
-     * @param fe 
-     * @returns 
-     */
 
-    /*
-    async findContratoByEmpEspFechEsp(emp: EmpresarioEntity, esp: EspectaculoEntity, fe :Date): Promise<ContratoEntity> {
-        const contrato = await this.contratoRepository.findOne({empresario: emp, espectaculo: esp, fechaEvento: fe});
-        if (!contrato) {
-            throw new NotFoundException(new MessageDto('no existe el contrato del empresario con esas características'));
-        }
-        return contrato;
-    }
-    */
+ 
     /**
      * 
      * @param dto 
      * @returns 
      */
-    /*
-    async create(dto: ContratoDto): Promise<any> {
-        const exists = await this.findContratoByEmpEspFechEsp(dto.empresario, dto.espectaculo, dto.fechaEvento);
+
+    async create(dto: any): Promise<any> {
+        const { fechaEvento, empresario, espectaculo } = dto;
+
+        const existEmp = await this.usuarioRepository.findOne(empresario);
+        if (!existEmp) throw new BadGatewayException(new MessageDto('Ese empresario no existe'));
+        const existEsp = await this.espectaculoRepository.findOne(espectaculo);
+        if (!existEsp) throw new BadGatewayException(new MessageDto('Ese espectáculo no existe'));
+        const exists = await this.contratoRepository.findOne({ where: [{ fechaEvento: fechaEvento, espectaculo: espectaculo, empresario: empresario }] })
         if (exists) throw new BadGatewayException(new MessageDto('Ese contrato ya existe'));
         const contrato = this.contratoRepository.create(dto);
         await this.contratoRepository.save(contrato);
         // return{message: 'usuario creado'};
         return new MessageDto('contrato creado');
     }
-    */
+
     /**
      * 
      * @param id 
@@ -95,7 +84,7 @@ export class ContratoService {
         dto.aceptado ? contrato.aceptado = dto.aceptado : contrato.aceptado = contrato.aceptado;
         dto.espectaculo ? contrato.espectaculo = dto.espectaculo : contrato.espectaculo = contrato.espectaculo;
         dto.fechaEvento ? contrato.fechaEvento = dto.fechaEvento : contrato.fechaEvento = contrato.fechaEvento;
-     
+
         await this.contratoRepository.save(contrato);
         //  return { message: 'usuario actualizado' };
         return new MessageDto('contrato actualizado');
@@ -113,4 +102,26 @@ export class ContratoService {
         return new MessageDto('artiscontratota eliminado');
 
     }
+
+
+    async findListByEmp(empId: number):Promise<ContratoEntity[]>{
+
+
+        const list = await this.contratoRepository.find({where: [{empresario: empId}]});
+        if (!list) throw new BadGatewayException(new MessageDto('Aún no tiene contratos'));
+        return list;
+    }
+
+    
+    async findOneEspByUser(contId: number):Promise<any>{
+
+        const cont = await this.contratoRepository.findOne(contId);
+        if (!cont) throw new BadGatewayException(new MessageDto('No existe ese contrato'));
+        console.log(cont)
+      //  const esp = cont.espectaculo.id;
+
+     //   const espectaculo = await this.espectaculoRepository.findOne(esp);
+//return espectaculo;
+    }
+
 }

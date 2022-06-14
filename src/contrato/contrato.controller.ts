@@ -6,7 +6,7 @@ import { ContratoDto } from './dto/contrato.dto';
 @Controller('contrato')
 export class ContratoController {
 
-    constructor(private readonly contratoService: ContratoService) {}
+    constructor(private readonly contratoService: ContratoService) { }
 
     @Get()
     async getAll() {
@@ -18,22 +18,30 @@ export class ContratoController {
         return await this.contratoService.findById(id);
     }
 
-    /*
-    @UsePipes(new ValidationPipe({whitelist: true}))
+    @Get('busca/:id')
+    async getListEmp(@Param('id', ParseIntPipe) id: number) {
+        return await this.contratoService.findListByEmp(id);
+    }
+
+    @UsePipes(new ValidationPipe({ whitelist: true }))
     @Post()
-    async create(@Body() dto:ContratoDto){
+    async create(@Body() dto: any) {
         return await this.contratoService.create(dto);
     }
-*/
-    @UsePipes(new ValidationPipe({whitelist: true}))
+
+    @UsePipes(new ValidationPipe({ whitelist: true }))
     @Put(':id')
-    async update(@Param('id', ParseIntPipe) id:number, @Body() dto:ContratoDto){
+    async update(@Param('id', ParseIntPipe) id: number, @Body() dto: ContratoDto) {
         return await this.contratoService.update(id, dto);
     }
 
     @Delete(':id')
-    async delete(@Param('id', ParseIntPipe) id: number){
+    async delete(@Param('id', ParseIntPipe) id: number) {
         return await this.contratoService.delete(id);
     }
 
+    @Get('mirar/:contId')
+    async getOneByEmp(@Param('contId', ParseIntPipe) contId: number) {
+        return await this.contratoService.findOneEspByUser(contId);
+    }
 }

@@ -27,7 +27,6 @@ export class EspectaculoController {
         return await this.espectaculoService.findById(id);
     }
 
-
     @Get('busca/:id')
     async getList(@Param('id', ParseIntPipe) id: number) {
         return await this.espectaculoService.findListByUser(id);

@@ -40,7 +40,7 @@ import { AuthModule } from './auth/auth.module';
     }),
     UsuarioModule,
     EspectaculoModule,
- //   ContratoModule,
+    ContratoModule,
     RolModule,
     AuthModule,
   ],
