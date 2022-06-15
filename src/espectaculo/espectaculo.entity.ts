@@ -16,11 +16,13 @@ export class EspectaculoEntity {
     @Column({ type: 'longtext', nullable: false })
     imagen: string;
 
-    @ManyToOne(type => UsuarioEntity, (usuario) => usuario.espectaculos)
+    @ManyToOne(type => UsuarioEntity, (usuario) => usuario.espectaculos,{
+        cascade:true
+    })
     @JoinColumn({ name: 'usuarioId' })
     usuario: UsuarioEntity;
 
-    @OneToMany(() => ContratoEntity, (contrato) => contrato.espectaculo)
+    @OneToMany(() => ContratoEntity, (contrato) => contrato.espectaculo,{ onDelete: 'CASCADE' })
     contratos: ContratoEntity[];
 
 

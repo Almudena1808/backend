@@ -21,7 +21,7 @@ export class ContratoEntity{
 
 
 
-  @ManyToOne(() => EspectaculoEntity, (espectaculo) => espectaculo.contratos)
+  @ManyToOne(() => EspectaculoEntity, (espectaculo) => espectaculo.contratos,{ onDelete: 'CASCADE' })
   @JoinColumn({name: 'espectaculoId'})
   espectaculo: EspectaculoEntity;
   

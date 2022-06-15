@@ -31,7 +31,7 @@ export class ContratoController {
 
     @UsePipes(new ValidationPipe({ whitelist: true }))
     @Put(':id')
-    async update(@Param('id', ParseIntPipe) id: number, @Body() dto: ContratoDto) {
+    async update(@Param('id', ParseIntPipe) id: number, @Body() dto: any) {
         return await this.contratoService.update(id, dto);
     }
 
@@ -44,4 +44,10 @@ export class ContratoController {
     async getOneByEmp(@Param('contId', ParseIntPipe) contId: number) {
         return await this.contratoService.findOneEspByUser(contId);
     }
+
+    @Get('esp/:id')
+    async getListContByEsp(@Param('id', ParseIntPipe) id: number) {
+        return await this.contratoService.findListByEsp(id);
+    }
+
 }

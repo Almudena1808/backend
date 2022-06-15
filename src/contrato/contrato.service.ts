@@ -79,11 +79,10 @@ export class ContratoService {
         if (!contrato)
             throw new BadGatewayException(new MessageDto('Ese contrato no existe'));
         const exists = await this.findById(dto.id);
-        if (exists && exists.id !== id) throw new BadGatewayException(new MessageDto('Ese contrato ya existe'));
+       // if (exists && exists.id !== id) throw new BadGatewayException(new MessageDto('Ese contrato ya existe'));
         //solo pongo que se pueden editar esos atributos porque solo son esos los que quiero que se puedan modificar
         dto.aceptado ? contrato.aceptado = dto.aceptado : contrato.aceptado = contrato.aceptado;
-        dto.espectaculo ? contrato.espectaculo = dto.espectaculo : contrato.espectaculo = contrato.espectaculo;
-        dto.fechaEvento ? contrato.fechaEvento = dto.fechaEvento : contrato.fechaEvento = contrato.fechaEvento;
+        dto.fechaFirma ? contrato.fechaFirma = dto.fechaFirma : contrato.fechaFirma = contrato.fechaFirma;
 
         await this.contratoRepository.save(contrato);
         //  return { message: 'usuario actualizado' };
@@ -109,6 +108,14 @@ export class ContratoService {
 
         const list = await this.contratoRepository.find({where: [{empresario: empId}]});
         if (!list) throw new BadGatewayException(new MessageDto('Aún no tiene contratos'));
+        return list;
+    }
+
+    async findListByEsp(espId: number):Promise<ContratoEntity[]>{
+
+
+        const list = await this.contratoRepository.find({where: [{espectaculo: espId}]});
+        if (!list) throw new BadGatewayException(new MessageDto('Aún no ha sido contratado'));
         return list;
     }
 
