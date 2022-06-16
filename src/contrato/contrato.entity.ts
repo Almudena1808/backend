@@ -19,7 +19,8 @@ export class ContratoEntity{
   @Column ({type: "varchar"})
   fechaFirma: string;
 
-
+  @Column ({type: "text"})
+  mensaje: string;
 
   @ManyToOne(() => EspectaculoEntity, (espectaculo) => espectaculo.contratos,{ onDelete: 'CASCADE' })
   @JoinColumn({name: 'espectaculoId'})

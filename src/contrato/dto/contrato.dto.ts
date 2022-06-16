@@ -7,6 +7,7 @@ export class ContratoDto{
     aceptado?: boolean;
     fechaEvento?: string;
     fechaFirma?: string;
+    mensaje?: string;
     espectaculo?: EspectaculoEntity;
     empresario?: UsuarioEntity;
 
